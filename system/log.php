@@ -24,4 +24,25 @@
  *                                                                                            *
  * Encapsulates writes to system log                                                          *
  **********************************************************************************************/
+
+class Log {
+  
+  // Class variables
+  private $logFile;
+  
+  // __construct()
+  // Opens log file in preparation for loggin
+  
+  function __construct() {
+    $logFilePath = '..' . $logFilePath;
+    $this->logFile = fopen($logFilePath);
+  }
+  
+  // __destruct()
+  // Closes log file
+  
+  function __destruct() {
+    fclose($logFile);
+  }
+}
 ?>
