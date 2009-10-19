@@ -38,6 +38,11 @@ class Log {
     
     $logFile = '..' . $logFilePath;
     $this->logFile = fopen($logFile, 'a');
+    
+    if(!$this->logFile) {
+      echo "Cannot open log file."
+      exit;
+    }
   }
   
   
