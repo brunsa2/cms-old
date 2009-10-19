@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License                          *
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.                      *
  *                                                                                            *
- * 6 October 2009                                                                             *
+ * 18 October 2009                                                                            *
  *                                                                                            *
  * log.php                                                                                    *
  *                                                                                            *
@@ -34,15 +34,30 @@ class Log {
   // Opens log file in preparation for loggin
   
   function __construct() {
-    $logFilePath = '..' . $logFilePath;
-    $this->logFile = fopen($logFilePath);
+    global $logFilePath;
+    
+    $logFile = '..' . $logFilePath;
+    $this->logFile = fopen($logFile, 'a');
   }
+  
+  
+  
+  // log(origin, entry)
+  // Logs date, time, origin, and entry to log
+  
+  function log($origin, $entry) {
+    fwrite($this->logFile, date('m-d-Y H:i:s'));
+    fwrite($this->logFile, ' ' . $origin . ' ');
+    fwrite($this->logFile, $entry . "\n");
+  }
+  
+  
   
   // __destruct()
   // Closes log file
   
   function __destruct() {
-    fclose($logFile);
+    fclose($this->logFile);
   }
 }
 ?>
