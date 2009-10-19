@@ -75,6 +75,8 @@ class User {
       
       if($numberOfRows == 1) {
         $_SESSION['isLoggedIn'] = 1;
+        $_SESSION['username'] = $this->username;
+        $_SESSION['passwordHash'] = $this->passwordHash;
         $this->isLoggedIn = 1;
         return 1;
       } else {
