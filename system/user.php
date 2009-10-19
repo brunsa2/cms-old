@@ -99,6 +99,7 @@ class User {
   function logout() {
     if($this->isLoggedIn == 1) {
       
+      $this->isLoggedIn = 0;
       unset($_SESSION['isLoggedIn']);
       $destroyResult = session_destroy();
       
@@ -118,7 +119,7 @@ class User {
   // Returns 1 if user is already logged in, 0 otherwise
   
   function isLoggedIn() {
-    return $isLoggedIn;
+    return $this->isLoggedIn;
   }
 }
 ?>
