@@ -7,5 +7,8 @@ $database = new Database();
 $user = new User();
 
 $user->setUserCredentials('brunsa2', 'amfamf');
+
 echo $user->login();
+echo '<br />';
+echo $user->logout();
 ?>

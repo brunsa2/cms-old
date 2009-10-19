@@ -68,6 +68,7 @@ class User {
   
   function login() {
     global $database;
+    
     if($this->isLoggedIn == 0 || !isset($this->isLoggedIn)) {
       $database->query("SELECT * FROM ###users WHERE username='$this->username' AND "
                        . "passwordHash='$this->passwordHash'");
