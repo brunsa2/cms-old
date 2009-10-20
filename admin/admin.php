@@ -1,7 +1,4 @@
 <?php
-
-//header('Content-type: application/xhtml; Charset=UTF-8');
-
 /**********************************************************************************************
  * Content Management System                                                                  *
  * Copyright (C) 2009 Jeff Stubler                                                            *
@@ -35,7 +32,7 @@ include('../system/user.php');
 $argumentsPassed = explode('/', $_GET['x']);
 
 for ($count = 0; $count < sizeof($argumentsPassed); $count++) {
-  $argumentsPassed[$count] = strip_tags(htmlentities($argumentsPassed[$count]));
+  $argumentsPassed[$count] = htmlentities(strip_tags($argumentsPassed[$count]));
 }
 
 $database = new Database();
@@ -48,7 +45,8 @@ if ($argumentsPassed[0] == 'logout') {
 
 // If necessary, login
 if (isset($_POST['username']) && isset($_POST['password'])) {
-  $user->setUserCredentials($_POST['username'], $_POST['password']);
+  $user->setUserCredentials(mysql_real_escape_string($_POST['username']),
+                            mysql_real_escape_string($_POST['password']));
   $user->login();
 }
 
