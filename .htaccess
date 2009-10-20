@@ -1,2 +1,3 @@
 RewriteEngine on
-RewriteRule ^/([^/\.]+)?$ index.php?q=$1 [L]
+RewriteRule ^administration/([^\.]+)?$ admin/admin.php?x=$1 [L]
+RewriteRule ^([^\.]+)?$ index.php?x=$1 [L]
