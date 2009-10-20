@@ -1,4 +1,7 @@
 <?php
+
+//header('Content-type: application/xhtml; Charset=UTF-8');
+
 /**********************************************************************************************
  * Content Management System                                                                  *
  * Copyright (C) 2009 Jeff Stubler                                                            *
@@ -28,11 +31,32 @@
 include('../system/config.php');
 include('../system/database.php');
 include('../system/user.php');
-include('../system/log.php');
 
 $argumentsPassed = explode('/', $_GET['x']);
 
-for($count = 0; $count < sizeof($argumentsPassed); $count++) {
+for ($count = 0; $count < sizeof($argumentsPassed); $count++) {
   $argumentsPassed[$count] = strip_tags(htmlentities($argumentsPassed[$count]));
+}
+
+$database = new Database();
+$user = new User();
+
+// If necessary, logout
+if ($argumentsPassed[0] == 'logout') {
+  $user->logout();
+}
+
+// If necessary, login
+if (isset($_POST['username']) && isset($_POST['password'])) {
+  $user->setUserCredentials($_POST['username'], $_POST['password']);
+  $user->login();
+}
+
+// If logged out, display login form
+// Otherwise, display logged-in state
+if ($user->isLoggedIn() == 0) {
+  include('login.php');
+} else {
+  echo "Logged in";
 }
 ?>

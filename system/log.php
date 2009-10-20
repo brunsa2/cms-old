@@ -40,7 +40,7 @@ class Log {
     $this->logFile = fopen($logFile, 'a');
     
     if(!$this->logFile) {
-      echo "Cannot open log file."
+      echo "Cannot open log file.";
       exit;
     }
   }
