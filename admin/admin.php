@@ -1,7 +1,5 @@
 <?php
 
-//header('Content-type: application/xhtml; Charset=UTF-8');
-
 /**********************************************************************************************
  * Content Management System                                                                  *
  * Copyright (C) 2009 Jeff Stubler                                                            *
