@@ -68,7 +68,7 @@ class User {
   
   function login() {
     global $database;
-    
+
     $database->query("SELECT * FROM ###users WHERE username='$this->username' AND "
                      . "passwordHash='$this->passwordHash'");
     $numberOfRows = $database->getNumberOfRows();
@@ -78,11 +78,9 @@ class User {
       $_SESSION['username'] = $this->username;
       $_SESSION['passwordHash'] = $this->passwordHash;
       $this->isLoggedIn = 1;
-      return 1;
     } else {
       $_SESSION['isLoggedIn'] = 0;
       $this->isLoggedIn = 0;
-      return 0;
     }
   }
   
@@ -92,20 +90,8 @@ class User {
   // Attempts to logout
   
   function logout() {
-    if($this->isLoggedIn == 1) {
-      
-      $this->isLoggedIn = 0;
-      unset($_SESSION['isLoggedIn']);
-      $destroyResult = session_destroy();
-      
-      if($destroyResult) {
-        return 1;
-      } else {
-        throw new Exception('Could not log out.');
-      }
-    } else {
-      throw new Exception('Alreagy logged out.');
-    }
+    unset($_SESSION['isLoggedIn']);
+    session_destroy();
   }
   
   
