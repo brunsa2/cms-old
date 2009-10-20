@@ -68,25 +68,19 @@ class User {
   
   function login() {
     global $database;
-    if($this->isLoggedIn == 0 || !isset($this->isLoggedIn)) {
-      $database->query("SELECT * FROM ###users WHERE username='$this->username' AND "
-                       . "passwordHash='$this->passwordHash'");
-      $numberOfRows = $database->getNumberOfRows();
-      
-      if($numberOfRows == 1) {
-        $_SESSION['isLoggedIn'] = 1;
-        $_SESSION['username'] = $this->username;
-        $_SESSION['passwordHash'] = $this->passwordHash;
-        $this->isLoggedIn = 1;
-        return 1;
-      } else {
-        $_SESSION['isLoggedIn'] = 0;
-        $this->isLoggedIn = 0;
-        return 0;
-      }
-      
+
+    $database->query("SELECT * FROM ###users WHERE username='$this->username' AND "
+                     . "passwordHash='$this->passwordHash'");
+    $numberOfRows = $database->getNumberOfRows();
+    
+    if($numberOfRows == 1) {
+      $_SESSION['isLoggedIn'] = 1;
+      $_SESSION['username'] = $this->username;
+      $_SESSION['passwordHash'] = $this->passwordHash;
+      $this->isLoggedIn = 1;
     } else {
-      throw new Exception('Already logged in.');
+      $_SESSION['isLoggedIn'] = 0;
+      $this->isLoggedIn = 0;
     }
   }
   
@@ -96,19 +90,8 @@ class User {
   // Attempts to logout
   
   function logout() {
-    if($this->isLoggedIn == 1) {
-      
-      unset($_SESSION['isLoggedIn']);
-      $destroyResult = session_destroy();
-      
-      if($destroyResult) {
-        return 1;
-      } else {
-        throw new Exception('Could not log out.');
-      }
-    } else {
-      throw new Exception('Alreagy logged out.');
-    }
+    unset($_SESSION['isLoggedIn']);
+    session_destroy();
   }
   
   
