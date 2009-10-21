@@ -78,11 +78,9 @@ class User {
       $_SESSION['username'] = $this->username;
       $_SESSION['passwordHash'] = $this->passwordHash;
       $this->isLoggedIn = 1;
-      return 1;
     } else {
       $_SESSION['isLoggedIn'] = 0;
       $this->isLoggedIn = 0;
-      return 0;
     }
   }
   
