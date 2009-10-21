@@ -94,13 +94,7 @@ class User {
   function logout() {      
     $this->isLoggedIn = 0;
     unset($_SESSION['isLoggedIn']);
-    $destroyResult = session_destroy();
-    
-    if($destroyResult) {
-      return 1;
-    } else {
-      throw new Exception('Could not log out.');
-    }
+    session_destroy();
   }
   
   
