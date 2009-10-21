@@ -91,20 +91,15 @@ class User {
   // logout()
   // Attempts to logout
   
-  function logout() {
-    if($this->isLoggedIn == 1) {
-      
-      $this->isLoggedIn = 0;
-      unset($_SESSION['isLoggedIn']);
-      $destroyResult = session_destroy();
-      
-      if($destroyResult) {
-        return 1;
-      } else {
-        throw new Exception('Could not log out.');
-      }
+  function logout() {      
+    $this->isLoggedIn = 0;
+    unset($_SESSION['isLoggedIn']);
+    $destroyResult = session_destroy();
+    
+    if($destroyResult) {
+      return 1;
     } else {
-      throw new Exception('Alreagy logged out.');
+      throw new Exception('Could not log out.');
     }
   }
   
