@@ -16,53 +16,45 @@
  * You should have received a copy of the GNU General Public License                          *
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.                      *
  *                                                                                            *
- * 18 October 2009                                                                            *
+ * 6 October 2009                                                                             *
  *                                                                                            *
- * log.php                                                                                    *
+ * admin.php                                                                                  *
  *                                                                                            *
- * Log class                                                                                  *
+ * Admin page display                                                                         *
  *                                                                                            *
- * Encapsulates writes to system log                                                          *
+ * Displays either login or admin page, handles admin login and logout                        *
  **********************************************************************************************/
 
-class Log {
-  
-  // Class variables
-  private $logFile;
-  
-  // __construct()
-  // Opens log file in preparation for loggin
-  
-  function __construct() {
-    global $logFilePath;
-    
-    $logFile = '..' . $logFilePath;
-    $this->logFile = fopen($logFile, 'a');
-    
-    if(!$this->logFile) {
-      echo "Cannot open log file.";
-      exit;
-    }
-  }
-  
-  
-  
-  // log(origin, entry)
-  // Logs date, time, origin, and entry to log
-  
-  function log($origin, $entry) {
-    fwrite($this->logFile, date('m-d-Y H:i:s'));
-    fwrite($this->logFile, ' ' . $origin . ' ');
-    fwrite($this->logFile, $entry . "\n");
-  }
-  
-  
-  
-  // __destruct()
-  // Closes log file
-  
-  function __destruct() {
-    fclose($this->logFile);
-  }
+include('../system/config.php');
+include('../system/database.php');
+include('../system/user.php');
+
+$argumentsPassed = explode('/', $_GET['x']);
+
+for ($count = 0; $count < sizeof($argumentsPassed); $count++) {
+  $argumentsPassed[$count] = htmlentities(strip_tags($argumentsPassed[$count]));
+}
+
+$database = new Database();
+$user = new User();
+
+// If necessary, logout
+if ($argumentsPassed[0] == 'logout') {
+  $user->logout();
+}
+
+// If necessary, login
+if (isset($_POST['username']) && isset($_POST['password'])) {
+  $user->setUserCredentials(mysql_real_escape_string($_POST['username']),
+                            mysql_real_escape_string($_POST['password']));
+  $user->login();
+}
+
+// If logged out, display login form
+// Otherwise, display logged-in state
+if ($user->isLoggedIn() == 0) {
+  include('login.php');
+} else {
+  echo "Logged in";
 }
 ?>
